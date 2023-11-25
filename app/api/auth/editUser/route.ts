@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import bcrypt from 'bcryptjs'
 import db from '@/libs/prisma'
 
-export async function PUT(request: { json: () => any }) {
+export async function PUT(request) {
     try {
         const data = await request.json()
         const userAuthorized = await db.user.findUnique(
