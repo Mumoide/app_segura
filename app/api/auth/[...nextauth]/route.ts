@@ -4,6 +4,7 @@ import db from '@/libs/prisma';
 import bcrypt from 'bcryptjs';
 import "dotenv/config";
 const CryptoJS = require('crypto-js');
+import Security from '@/components/security';
 
 const llave = process.env.NEXT_PUBLIC_CRYPTO;
 
@@ -27,14 +28,17 @@ export const authOptions = {
                         email: credentials.email
                     }
                 });
-
+                const security = new Security();
                 if (!userFound) throw new Error("User not found");
 
-                const decryptedPassword = CryptoJS.AES.decrypt(userFound.password, llave);
+                // const decryptedPassword = CryptoJS.AES.decrypt(userFound.password, llave);
+                const decryptedPassword = security.decrypt(userFound.password);
                 console.log(decryptedPassword)
-                const matchPassword = bcrypt.compare(decryptedPassword, credentials.password)
+                if (decryptedPassword) {
+                    const matchPassword = bcrypt.compare(decryptedPassword, credentials.password);
+                    if (!matchPassword) throw new Error("Wrong password");
+                }
 
-                if (!matchPassword) throw new Error("Wrong password");
 
                 return {
                     id: userFound.id,

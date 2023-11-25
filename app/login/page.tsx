@@ -6,11 +6,14 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import "dotenv/config";
 const CryptoJS = require("crypto-js");
+import Security from "../../components/security";
 
 export default function Login() {
   const llave = process.env.NEXT_PUBLIC_CRYPTO;
   const [error, setError] = useState("");
   const [waiting, setWaiting] = useState(false);
+
+  const security = new Security();
 
   const {
     register,
@@ -22,11 +25,12 @@ export default function Login() {
 
   const router = useRouter();
   const onSubmit = handleSubmit(async (data) => {
-    const encryptedPassword = CryptoJS.AES.encrypt(
-      data.password,
-      llave
-    ).toString();
+    // const encryptedPassword = CryptoJS.AES.encrypt(
+    //   data.password,
+    //   llave
+    // ).toString();
     //console.log(llave);
+    const encryptedPassword = security.encrypt(data.password);
     const res = await signIn("credentials", {
       email: data.email,
       password: encryptedPassword,
