@@ -61,6 +61,7 @@ export default function App() {
         email: data.email,
         password: data.password,
         type: data.type,
+        userEmail: session?.user?.email,
       }),
       headers: {
         "Content-Type": "application/json",

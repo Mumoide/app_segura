@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import db from '@/libs/prisma';
 
-export async function DELETE(request: { json: () => any }) {
+export async function DELETE(request) {
     try {
         const { userEmail, id } = await request.json()
         console.log(userEmail)

@@ -4,10 +4,9 @@ import db from '@/libs/prisma'
 
 
 
-export async function POST(request: { json: () => any }) {
+export async function POST(request) {
     try {
         const data = await request.json()
-
         const userAuthorized = await db.user.findUnique(
             {
                 where: {
@@ -15,14 +14,12 @@ export async function POST(request: { json: () => any }) {
                 }
             }
         )
-
         if (userAuthorized?.type !== 2) {
             return NextResponse.json(
                 { message: "Unauthorized" },
                 { status: 401 },
             )
         }
-
         const userFound = await db.user.findUnique(
             {
                 where: {
