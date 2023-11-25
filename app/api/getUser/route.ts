@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import db from '@/libs/prisma';
 
-export async function POST(request) {
+export async function POST(request: any) {
     try {
         const { email } = await request.json(); // Assuming the request body contains the user ID to be retrieved
 

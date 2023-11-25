@@ -4,7 +4,7 @@ import db from '@/libs/prisma'
 
 
 
-export async function POST(request) {
+export async function POST(request: any) {
     try {
         const data = await request.json()
         const userAuthorized = await db.user.findUnique(
