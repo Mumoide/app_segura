@@ -3,8 +3,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import db from '@/libs/prisma';
 import bcrypt from 'bcryptjs';
 import "dotenv/config";
-const CryptoJS = require('crypto-js');
-import Security from '@/components/security';
 
 const llave = process.env.NEXT_PUBLIC_CRYPTO;
 
@@ -12,6 +10,14 @@ declare module 'next-auth' {
     interface User {
         id: number;
     }
+}
+
+function decrypt(tex: string, key: string) {
+    return String.fromCharCode(
+        ...(tex.match(/.{1,2}/g) || []).map((e, i) =>
+            parseInt(e, 16) ^ key.charCodeAt(i % key.length) % 255
+        )
+    );
 }
 
 export const authOptions = {
@@ -28,16 +34,14 @@ export const authOptions = {
                         email: credentials.email
                     }
                 });
-                const security = new Security();
+
                 if (!userFound) throw new Error("User not found");
 
-                // const decryptedPassword = CryptoJS.AES.decrypt(userFound.password, llave);
-                const decryptedPassword = security.decrypt(userFound.password);
-                console.log(decryptedPassword)
-                if (decryptedPassword) {
-                    const matchPassword = bcrypt.compare(decryptedPassword, credentials.password);
-                    if (!matchPassword) throw new Error("Wrong password");
-                }
+                const decryptedPassword = decrypt(credentials.password, llave as string);
+                const matchPassword = await bcrypt.compare(decryptedPassword, userFound.password);
+                console.log(matchPassword)
+                if (!matchPassword) throw new Error("Wrong password");
+
 
 
                 return {
