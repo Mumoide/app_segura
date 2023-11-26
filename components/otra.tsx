@@ -1,6 +1,8 @@
+// pages/index.tsx
+
 import React from "react";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
-import "./Table.css";
+import styles from "./Table.module.css"; // Import your CSS module
 
 interface TableRow {
   username: string;
@@ -10,14 +12,12 @@ interface TableRow {
 
 interface TableProps {
   rows: TableRow[];
-  deleteRow: (idx: number) => void;
-  editRow: (idx: number) => void;
 }
 
-export const Table = ({ rows, deleteRow, editRow }: TableProps) => {
+const Table: React.FC<TableProps> = ({ rows }) => {
   return (
-    <div className="table-wrapper">
-      <table className="table">
+    <div className={styles.tableWrapper}>
+      <table className={styles.table}>
         <thead>
           <tr>
             <th>Name</th>
@@ -27,34 +27,25 @@ export const Table = ({ rows, deleteRow, editRow }: TableProps) => {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row: TableRow, idx: number) => {
-            // const statusText =
-            // row.status.charAt(0).toUpperCase() + row.status.slice(1);
-
-            return (
-              <tr key={idx}>
-                <td>{row.username}</td>
-                <td className="expand">{row.email}</td>
-                <td>
-                  <span>{row.type !== 1 ? "Admin" : "User"}</span>
-                </td>
-                <td className="fit">
-                  <span className="actions">
-                    <BsFillTrashFill
-                      className="delete-btn"
-                      onClick={() => deleteRow(idx)}
-                    />
-                    <BsFillPencilFill
-                      className="edit-btn"
-                      onClick={() => editRow(idx)}
-                    />
-                  </span>
-                </td>
-              </tr>
-            );
-          })}
+          {rows.map((row: TableRow, idx: number) => (
+            <tr key={idx}>
+              <td>{row.username}</td>
+              <td className={styles.expand}>{row.email}</td>
+              <td>
+                <span>{row.type !== 1 ? "Admin" : "User"}</span>
+              </td>
+              <td className={styles.fit}>
+                <span className={styles.actions}>
+                  <BsFillTrashFill className={styles.deleteBtn} />
+                  <BsFillPencilFill className={styles.editBtn} />
+                </span>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
   );
 };
+
+export default Table;
