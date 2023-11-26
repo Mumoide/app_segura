@@ -1,12 +1,22 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Table from "../../../components/otra";
+import { Table } from "../../../components/otra";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
+import "../../../components/Table.css";
 
 interface TableRow {
-  // Define the properties of each row here
+  username: string;
+  email: string;
+  type: number;
+}
+
+interface TableProps {
+  rows: TableRow[];
+  deleteRow: (idx: number) => void;
+  editRow: (idx: number) => void;
 }
 
 interface User {
@@ -127,7 +137,46 @@ function Page() {
         <h1 className="text-slate-200 font-bold text-4xl">Users list</h1>
       </div>
       <div className={"h-3/4 mt-3 flex justify-center items-center"}>
-        <Table rows={users} deleteRow={deleteRow} editRow={editRow} />
+        <div className="table-wrapper">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Type</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((row: TableRow, idx: number) => {
+                // const statusText =
+                // row.status.charAt(0).toUpperCase() + row.status.slice(1);
+
+                return (
+                  <tr key={idx}>
+                    <td>{row.username}</td>
+                    <td className="expand">{row.email}</td>
+                    <td>
+                      <span>{row.type !== 1 ? "Admin" : "User"}</span>
+                    </td>
+                    <td className="fit">
+                      <span className="actions">
+                        <BsFillTrashFill
+                          className="delete-btn"
+                          onClick={() => deleteRow(idx)}
+                        />
+                        <BsFillPencilFill
+                          className="edit-btn"
+                          onClick={() => editRow(idx)}
+                        />
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
       <div className={"flex justify-center items-center mt-5"}>
         <button
