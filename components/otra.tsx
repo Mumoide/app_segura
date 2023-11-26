@@ -12,9 +12,11 @@ interface TableRow {
 
 interface TableProps {
   rows: TableRow[];
+  deleteRow: (idx: number) => void;
+  editRow: (idx: number) => void;
 }
 
-const Table: React.FC<TableProps> = ({ rows }) => {
+const Table: React.FC<TableProps> = ({ rows, deleteRow, editRow }) => {
   return (
     <div className={styles.tableWrapper}>
       <table className={styles.table}>
