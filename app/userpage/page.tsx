@@ -100,6 +100,7 @@ export default function UserPage() {
 
     if (res.ok) {
       alert("User edited successfully");
+      router.refresh();
     }
   };
 
