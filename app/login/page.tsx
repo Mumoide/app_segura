@@ -67,7 +67,7 @@ export default function Login() {
         setWaiting(false);
         setError("");
         reset();
-      }, 3000); // 1 minute in milliseconds
+      }, 60000); // 1 minute in milliseconds
     }
 
     return () => {
@@ -102,7 +102,19 @@ export default function Login() {
             {...register("email", {
               required: {
                 value: true,
-                message: "Email is required",
+                message: "Required field",
+              },
+              maxLength: {
+                value: 50,
+                message: "Max length is 50 characters",
+              },
+              minLength: {
+                value: 3,
+                message: "Min length is 3 characters",
+              },
+              pattern: {
+                value: /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/,
+                message: "Invalid email format",
               },
             })}
             className="h-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -129,7 +141,19 @@ export default function Login() {
             {...register("password", {
               required: {
                 value: true,
-                message: "Password is required",
+                message: "Required field",
+              },
+              maxLength: {
+                value: 20,
+                message: "Max length is 20 characters",
+              },
+              minLength: {
+                value: 5,
+                message: "Min length is 5 characters",
+              },
+              pattern: {
+                value: /^[^';"<>-]*$/,
+                message: "Invalid character used",
               },
             })}
             className="h-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -142,7 +166,10 @@ export default function Login() {
               visibility: errors.password ? "visible" : "hidden",
             }}
           >
-            <span className="text-red-500 text-xs">
+            <span
+              className="text-red-500 text-xs mt-2"
+              style={{ minHeight: "1.5em" }}
+            >
               {errors.password ? (errors.password.message as string) : " "}
             </span>
           </div>
