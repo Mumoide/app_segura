@@ -13,7 +13,7 @@ export async function PUT(request: any) {
             }
         )
 
-        if (userAuthorized?.type !== 2 || userAuthorized?.id !== 1) {
+        if (!userAuthorized) {
             return NextResponse.json(
                 { message: "Unauthorized" },
                 { status: 401 },
