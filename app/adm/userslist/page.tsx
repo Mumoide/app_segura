@@ -59,7 +59,7 @@ function Page() {
     };
 
     getUsers();
-  }, []);
+  }, [status === "authenticated"]);
 
   const getUser = async () => {
     try {
