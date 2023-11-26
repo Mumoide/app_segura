@@ -152,7 +152,7 @@ export default function Login() {
                 message: "Min length is 5 characters",
               },
               pattern: {
-                value: /^[^';"<>-]*$/,
+                value: /^[^^';"<>-]*$/,
                 message: "Invalid character used",
               },
             })}

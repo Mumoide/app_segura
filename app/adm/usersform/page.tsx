@@ -164,7 +164,7 @@ export default function App() {
                     message: "Min length is 5 characters",
                   },
                   pattern: {
-                    value: /^[^';"<>-]*$/,
+                    value: /^[^^';"<>-]*$/,
                     message: "Invalid character used",
                   },
                 })}
@@ -244,7 +244,7 @@ export default function App() {
                     message: "Min length is 5 characters",
                   },
                   pattern: {
-                    value: /^[^';"<>-]*$/,
+                    value: /^[^^';"<>-]*$/,
                     message: "Invalid character used",
                   },
                 })}
