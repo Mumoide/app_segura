@@ -37,26 +37,33 @@ function Page() {
     username: "",
   });
 
-  useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const res = await fetch("/api/getUsers", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (res.ok) {
-          const data = await res.json();
-          console.log(data);
-          setUsers(data);
-        } else {
-          console.error("Failed to fetch users");
-        }
-      } catch (error) {
-        console.error("Error:", error);
+  const getUsers = async () => {
+    try {
+      const res = await fetch("/api/getUsers", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "no-cache",
+      });
+      if (res.ok) {
+        const data = await res.json();
+        console.log(data);
+        setUsers(data);
+      } else {
+        console.error("Failed to fetch users");
       }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      await getUsers();
     };
+
+    fetchUsers();
 
     getUsers();
   }, [status === "authenticated"]);
