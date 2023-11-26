@@ -1,8 +1,6 @@
-// pages/index.tsx
-
 import React from "react";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
-import styles from "./Table.module.css"; // Import your CSS module
+import "./Table.css";
 
 interface TableRow {
   username: string;
@@ -16,10 +14,10 @@ interface TableProps {
   editRow: (idx: number) => void;
 }
 
-const Table: React.FC<TableProps> = ({ rows, deleteRow, editRow }) => {
+export const Table = ({ rows, deleteRow, editRow }: TableProps) => {
   return (
-    <div className={styles.tableWrapper}>
-      <table className={styles.table}>
+    <div className="table-wrapper">
+      <table className="table">
         <thead>
           <tr>
             <th>Name</th>
@@ -29,25 +27,34 @@ const Table: React.FC<TableProps> = ({ rows, deleteRow, editRow }) => {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row: TableRow, idx: number) => (
-            <tr key={idx}>
-              <td>{row.username}</td>
-              <td className={styles.expand}>{row.email}</td>
-              <td>
-                <span>{row.type !== 1 ? "Admin" : "User"}</span>
-              </td>
-              <td className={styles.fit}>
-                <span className={styles.actions}>
-                  <BsFillTrashFill className={styles.deleteBtn} />
-                  <BsFillPencilFill className={styles.editBtn} />
-                </span>
-              </td>
-            </tr>
-          ))}
+          {rows.map((row: TableRow, idx: number) => {
+            // const statusText =
+            // row.status.charAt(0).toUpperCase() + row.status.slice(1);
+
+            return (
+              <tr key={idx}>
+                <td>{row.username}</td>
+                <td className="expand">{row.email}</td>
+                <td>
+                  <span>{row.type !== 1 ? "Admin" : "User"}</span>
+                </td>
+                <td className="fit">
+                  <span className="actions">
+                    <BsFillTrashFill
+                      className="delete-btn"
+                      onClick={() => deleteRow(idx)}
+                    />
+                    <BsFillPencilFill
+                      className="edit-btn"
+                      onClick={() => editRow(idx)}
+                    />
+                  </span>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
   );
 };
-
-export default Table;
