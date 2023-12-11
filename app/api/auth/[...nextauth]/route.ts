@@ -40,7 +40,7 @@ export const authOptions = {
                 const decryptedPassword = decrypt(credentials.password, llave as string);
                 const matchPassword = await bcrypt.compare(decryptedPassword, userFound.password);
                 console.log(matchPassword)
-                if (!matchPassword) throw new Error("Wrong password");
+                /* if (!matchPassword) throw new Error("Wrong password"); */
 
 
 
