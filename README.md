@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# app_segura
 
-## Getting Started
+La aplicación app_segura fue creada para la asignatura Seguridad en Sistemas Computacionales del DuocUC.
 
-First, run the development server:
+La función de está página es de administrar usuarios y que los usuarios puedan administrar sus perfiles, el desarrollo de esta aplicación tuvo un enfoque en la seguridad, no en la funcionalidad de la aplicación en sí (Cuenta con un CRUD de usuarios).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Las vulnerabilidades que esta aplicación considera son las siguientes:
+- SQL Injection: Todos los campos están validados para que no puedan realizar inyecciones de SQL.
+- Fallas criptográficas: La transferencia de datos sensibles (Contraseña de usuario en este caso) está encriptado.
+- Broken Access Control: Las cookies se encuentran encriptadas.
+- Fallas de identificación y autenticación: Después de ingresar 3 veces seguidas credenciales de login erróneas se bloquea el login por un minuto.
+- Diseño inseguro: Existe un módulo de administración de usuarios y los privilegios se manejan con roles de usuarios (Usuario y administrador).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<h2>Login:</h2>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<img src="public/login.png" height="600">
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<h2>Bloqueo de login:</h2>
 
-## Learn More
+<img src="public/bloqueodelogin.png" height="600">
 
-To learn more about Next.js, take a look at the following resources:
+<h2>Página de perfil:</h2>
+<img src="public/profile.png" height="600">
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<h2>Página de administración de usuarios:</h2>
+<img src="public/admin de usuarios.png" height="600">
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+<h2>Página de creación de usuarios.:</h2>
+<img src="public/create.png" height="600">
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
